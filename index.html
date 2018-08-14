@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+  <style>
+    #app{
+      width: 960px;
+    }
+    #menu{
+      text-align: right;
+    }
+    #menu i{
+      padding: 0.5rem 0.5rem;
+      font-size: 2rem;
+    }
+    #menu .selected{
+      color: #f34c27;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="canvas"></div>
+    <div id="menu">
+      <i id="hand"   class="operation far fa-hand-paper selected"></i>
+      <i id="pen"    class="operation fas fa-pencil-alt"></i>
+      <i id="eraser" class="operation fas fa-eraser"></i>
+      <i id="save"   class="operation far fa-save"></i>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
+  <script src="myscript.js"></script>
+</body>
+</html>
