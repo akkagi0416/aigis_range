@@ -1,3 +1,5 @@
+'use strict';
+
 let canvas;
 let map;
 let cell;
@@ -22,14 +24,14 @@ function setup(){
   for(let operation of operations){
     operation.mousePressed(selectMode);
   }
+
+  let p = createP("map2");
+  p.parent("#maps");
+  p.mousePressed(selectMap);
 }
 
 function draw(){
   image(map, width / 2, height / 2);
-
-  if(isPressed && mode == "pen"){
-    drawRange(px, py, mouseX, mouseY);
-  }
 
   for(let range of ranges){
     range.show();
@@ -45,6 +47,7 @@ function mousePressed(){
 
 function mouseDragged(){
   if(mode == "hand")   handDragged();
+  if(mode == "pen")    penDragged();
 }
 
 function mouseReleased(){
@@ -61,7 +64,7 @@ function gotFile(file){
 
 function drawRange(px1, py1, px2, py2){
   let d = dist(px1, py1, px2, py2);
-  let range = d * 4 / 3;
+  let range = d * 4 / 3;  // px -> range
 
   stroke(0, 255, 0);
   fill(0, 255, 0, 50);
@@ -75,13 +78,17 @@ function drawRange(px1, py1, px2, py2){
 
 class Range{
   constructor(_px1, _py1, _px2, _py2){
+    this.set(_px1, _py1, _px2, _py2, true);
+  }
+
+  set(_px1, _py1, _px2, _py2, _isSelected = false){
     this.px1 = _px1;
     this.py1 = _py1;
     this.px2 = _px2;
     this.py2 = _py2;
     this.d   = dist(_px1, _py1, _px2, _py2);
     this.range = this.d * 4 / 3;   // px -> range
-    this.isSelected = false;
+    this.isSelected = _isSelected;
   }
 
   move(_x, _y){
@@ -131,17 +138,26 @@ function handReleased(){
 
 function penPressed(){
   if(mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height){
-    isPressed = true;
-  }
-  px = mouseX;
-  py = mouseY;
-}
-function penReleased(){
-  if(mode == "pen" && isPressed == true){
-    let r = new Range(px, py, mouseX, mouseY);
+    px = mouseX;
+    py = mouseY;
+    
+    let r = new Range(px, py, px, py);
     ranges.push(r);
   }
-  isPressed = false;
+}
+
+function penDragged(){
+  for(let range of ranges){
+    if(range.isSelected == true){
+      range.set(px, py, mouseX, mouseY, true);
+    }
+  }
+}
+
+function penReleased(){
+  for(let range of ranges){
+    range.isSelected = false;
+  }
 }
 
 function eraserPressed(){
@@ -158,7 +174,15 @@ function eraserReleased(){
 
 function savePressed(){
   saveCanvas(canvas, "map", "jpg");
+  // for saving only once, change mode "save" -> "hand"
+  select("#save").removeClass("selected");
+  mode = "hand";
+  select("#hand").addClass("selected");
 }
 
 function saveReleased(){
+}
+
+function selectMap(){
+  map = loadImage("img/map2.jpg");
 }
