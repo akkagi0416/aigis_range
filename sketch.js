@@ -20,14 +20,20 @@ function setup(){
   canvas.drop(gotFile);   // drag & drop
   imageMode(CENTER);
 
+  // set .operation action
   let operations = selectAll(".operation");
   for(let operation of operations){
     operation.mousePressed(selectMode);
   }
 
-  let p = createP("map2");
-  p.parent("#maps");
-  p.mousePressed(selectMap);
+  // set #maps action
+  // let maps = ["map.jpg", "map2.jpg"]
+  // for(let m of maps){
+  //
+  // }
+  // let p = createP("map2");
+  // p.parent("#maps");
+  // p.mousePressed(selectMap);
 }
 
 function draw(){
@@ -48,13 +54,15 @@ function mousePressed(){
 function mouseDragged(){
   if(mode == "hand")   handDragged();
   if(mode == "pen")    penDragged();
+  // if(mode == "eraser") eraserDragged();
+  // if(mode == "save")   saveDragged();
 }
 
 function mouseReleased(){
   if(mode == "hand")   handReleased();
   if(mode == "pen")    penReleased();
-  if(mode == "eraser") eraserReleased();
-  if(mode == "save")   saveReleased();
+  // if(mode == "eraser") eraserReleased();
+  // if(mode == "save")   saveReleased();
 }
 
 function gotFile(file){

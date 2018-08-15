@@ -9,46 +9,120 @@
     body{
       font-family: "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", YuGothic, sans-serif;
     }
-    header{
-      //margin-bottom: 0.5rem;
+    h1, h2, h3{
+      font-size: 1.25rem;
     }
     #app{
       width: 960px;
     }
-    #operations{
-      text-align: right;
+    #menu{
+      display: flex;
     }
-    #operations i{
+    #menu i{
       padding: 0.5rem 0.5rem;
       font-size: 2rem;
+    }
+    #operations{
+      margin: 0 0 0 auto;
+      text-align: right;
     }
     #operations .selected{
       color: #f34c27;
     }
+    /* for pop up [codepen](https://codepen.io/imprakash/pen/GgNMXO) */
+    .overlay{
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.5);
+      transition: opacity 500ms;
+      visibility: hidden;
+      opacity: 0;
+    }
+    .overlay:target{
+      visibility: visible;
+      opacity: 1;
+    }
+    .popup{
+      margin: 50px auto;
+      background-color: #fff;
+    }
+    /* // popup */
+    /* for accordion [](https://saruwakakun.com/html-css/reference/accordion) */
+    .accbox{
+      background-color: #fff;
+    }
+    .accbox label{
+
+    }
+    .accbox input{
+      display: none;
+    }
+    .accbox .accshow{
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: 0.5s;
+    }
+    .cssacc:checked + .accshow{
+      height: auto;
+      opacity: 1;
+    }
+    /* // accordion */
   </style>
 </head>
 <body>
   <header class="mb-2">
     <nav class="navbar navbar-light bg-light">
       <div class="container">
-        <a class="navbar-brand" href="#">アイギス射程ツール</a>
+        <h1 class="navbar-brand m-0">アイギス射程ツール</h1>
       </div>
     </nav>
   </header>
   <main class="container">
-    <div id="maps"></div>
     <div id="app">
       <div id="canvas"></div>
-      <div id="operations">
-        <i id="hand"   class="operation far fa-hand-paper selected"></i>
-        <i id="pen"    class="operation fas fa-pencil-alt"></i>
-        <i id="eraser" class="operation fas fa-eraser"></i>
-        <i id="save"   class="operation far fa-save"></i>
+      <div id="menu">
+        <div id="map">
+          <a href="#popup_wrap"><i class="map_icon far fa-map"></i></a>
+        </div>
+        <div id="operations">
+          <i id="hand"   class="operation far fa-hand-paper selected"></i>
+          <i id="pen"    class="operation fas fa-pencil-alt"></i>
+          <i id="eraser" class="operation fas fa-eraser"></i>
+          <i id="save"   class="operation far fa-save"></i>
+        </div>
       </div>
-    </div>
+    </div><!-- //#app -->
+
+    <div id="popup_wrap" class="overlay">
+      <div class="popup container p-4">
+        <h3>マップ選択 <a href="#"><i class="far fa-times-circle"></i></a></h3>
+        <div class="accbox">
+          <label for="label1">accbox1</label>
+          <input type="checkbox" id="label1" class="cssacc">
+          <div class="accshow">
+            <ul>
+              <li>map1-1</li>
+              <li>map1-2</li>
+            </ul>
+          </div>
+          <label for="label2">accbox2</label>
+          <input type="checkbox" id="label2" class="cssacc">
+          <div class="accshow">
+            <ul>
+              <li>map2-1</li>
+              <li>map2-2</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div><!-- // popup_wrap -->
   </main>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
-  <script src="myscript.js"></script>
+  <script src="sketch.js"></script>
 </body>
 </html>
