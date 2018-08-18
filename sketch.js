@@ -3,15 +3,17 @@
 let canvas;
 let map;
 let cell;
-let isPressed = false;
-let px, py;
-let ranges = [];
+let px, py;         // position of pressed mouseX, mouseY
+let ranges = [];    // Range objects
 
-let mode = "move";
+let mode = "move";  // move, pen, eraser, save
+
+let json_maps;
 
 function preload(){
   map  = loadImage("img/map.jpg");
   cell = loadImage("img/cell.png");
+  json_maps = loadJSON("maps.json");
 }
 
 function setup(){
@@ -26,14 +28,8 @@ function setup(){
     operation.mousePressed(selectMode);
   }
 
-  // set #maps action
-  // let maps = ["map.jpg", "map2.jpg"]
-  // for(let m of maps){
-  //
-  // }
-  // let p = createP("map2");
-  // p.parent("#maps");
-  // p.mousePressed(selectMap);
+  // make maps menu to html#maps
+  make_maps_menu("#maps");
 }
 
 function draw(){
@@ -191,6 +187,25 @@ function savePressed(){
 function saveReleased(){
 }
 
-function selectMap(){
-  map = loadImage("img/map2.jpg");
+
+// make maps menu to html#maps
+function make_maps_menu(selector){
+  let sel = select(selector);
+  let i = 0;
+  for(let key in json_maps){
+    let div = createDiv();
+    div.addClass("accordion");
+    sel.child(div);
+    let html = `<label for="label${i}">${key}</label>
+                <input type="checkbox" id="label${i}">
+                  <ul class="accordion_show">`;
+    for(let row of json_maps[key]){
+      let img_name = row['img'];
+      let basename = img_name.replace(/\.(.+)$/, ''); 
+      html += `<li id="${basename}" class="map"><a href="#">${row['text']}</a></li>`;
+    }
+    html += "</ul>";
+    div.html(html);
+    i++;
+  }
 }

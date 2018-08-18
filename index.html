@@ -51,26 +51,23 @@
     }
     /* // popup */
     /* for accordion [](https://saruwakakun.com/html-css/reference/accordion) */
-    .accbox{
-      background-color: #fff;
+    #maps{
     }
-    .accbox label{
-
+    #maps label{
     }
-    .accbox input{
+    #maps input{
       display: none;
     }
-    .accbox .accshow{
+    #maps .accordion_show{
       height: 0;
       overflow: hidden;
       opacity: 0;
       transition: 0.5s;
     }
-    .cssacc:checked + .accshow{
+    #maps input:checked + .accordion_show{
       height: auto;
       opacity: 1;
     }
-    /* // accordion */
   </style>
 </head>
 <body>
@@ -85,8 +82,9 @@
     <div id="app">
       <div id="canvas"></div>
       <div id="menu">
-        <div id="map">
-          <a href="#popup_wrap"><i class="map_icon far fa-map"></i></a>
+        <div id="popups">
+          <a href="#maps_wrap"><i  class="icon_map far fa-map"></i></a>
+          <a href="#units_wrap"><i class="icon_unit far fa-user"></i></a>
         </div>
         <div id="operations">
           <i id="hand"   class="operation far fa-hand-paper selected"></i>
@@ -97,29 +95,19 @@
       </div>
     </div><!-- //#app -->
 
-    <div id="popup_wrap" class="overlay">
-      <div class="popup container p-4">
+    <div id="maps_wrap" class="overlay">
+      <section id="maps" class="popup container p-4">
         <h3>マップ選択 <a href="#"><i class="far fa-times-circle"></i></a></h3>
-        <div class="accbox">
-          <label for="label1">accbox1</label>
-          <input type="checkbox" id="label1" class="cssacc">
-          <div class="accshow">
-            <ul>
-              <li>map1-1</li>
-              <li>map1-2</li>
-            </ul>
-          </div>
-          <label for="label2">accbox2</label>
-          <input type="checkbox" id="label2" class="cssacc">
-          <div class="accshow">
-            <ul>
-              <li>map2-1</li>
-              <li>map2-2</li>
-            </ul>
-          </div>
-        </div>
+        <!-- here made by sketch.js -->
+      </section>
+    </div><!-- // maps_wrap -->
+
+    <div id="units_wrap" class="overlay">
+      <div id="units" class="popup container p-4">
+        <h3>ユニット選択 <a href="#"><i class="far fa-times-circle"></i></a></h3>
+        <!-- here made by sketch.js -->
       </div>
-    </div><!-- // popup_wrap -->
+    </div><!-- // units_wrap -->
   </main>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
