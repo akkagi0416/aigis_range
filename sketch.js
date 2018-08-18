@@ -9,6 +9,7 @@ let ranges = [];    // Range objects
 let mode = "move";  // move, pen, eraser, save
 
 let json_maps;
+let aiu;
 
 function preload(){
   map  = loadImage("img/map.jpg");
@@ -28,8 +29,12 @@ function setup(){
     operation.mousePressed(selectMode);
   }
 
-  // make maps menu to html#maps
+  // make maps menu to html#maps & bind select map
   make_maps_menu("#maps");
+  let maps = selectAll(".map");
+  for(let m of maps){
+    m.mousePressed(selectMap);
+  }
 }
 
 function draw(){
@@ -202,10 +207,16 @@ function make_maps_menu(selector){
     for(let row of json_maps[key]){
       let img_name = row['img'];
       let basename = img_name.replace(/\.(.+)$/, ''); 
-      html += `<li id="${basename}" class="map"><a href="#">${row['text']}</a></li>`;
+      html += `<li id="${basename}" class="map" data-img="${img_name}"><a href="#">${row['text']}</a></li>`;
     }
     html += "</ul>";
     div.html(html);
     i++;
   }
+}
+
+function selectMap(){
+  let img = this.attribute('data-img');
+  // TODO error check
+  map = loadImage(img);
 }

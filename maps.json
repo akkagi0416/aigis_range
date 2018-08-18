@@ -1,0 +1,26 @@
+{
+  "map1":[
+    {
+      "text": "map",
+      "img":  "img/map.jpg"
+    },
+    {
+      "text": "map2",
+      "img":  "img/map2.jpg"
+    },
+    {
+      "text": "map3",
+      "img":  "https://i1.wp.com/akkagi.info/wp-content/uploads/2017/11/bandicam-2017-11-17-13-34-59-210.jpg"
+    }
+  ],
+  "map2":[
+    {
+      "text": "map2-1",
+      "img":  "map2_1.jpg"
+    },
+    {
+      "text": "map2-2",
+      "img":  "map2_2.jpg"
+    }
+  ]
+}
