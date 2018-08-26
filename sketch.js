@@ -14,7 +14,7 @@ let aiu;
 function preload(){
   map  = loadImage("img/map.jpg");
   cell = loadImage("img/cell.png");
-  json_maps = loadJSON("maps.json");
+  // json_maps = loadJSON("maps.json");
 }
 
 function setup(){
@@ -30,7 +30,7 @@ function setup(){
   }
 
   // make maps menu to html#maps & bind select map
-  make_maps_menu("#maps");
+  // make_maps_menu("#maps");
   let maps = selectAll(".map");
   for(let m of maps){
     m.mousePressed(selectMap);

@@ -98,7 +98,15 @@
     <div id="maps_wrap" class="overlay">
       <section id="maps" class="popup container p-4">
         <h3>マップ選択 <a href="#"><i class="far fa-times-circle"></i></a></h3>
-        <!-- here made by sketch.js -->
+        <div class="accordion" v-for="(maps, key, i) in areas">
+          <label v-bind:for="'label' + i">{{ key }}</label>
+          <input type="checkbox" v-bind:id="'label' + i">
+          <ul class="accordion_show">
+            <li class="map" v-for="map in maps" v-bind:data-img="map['img']">
+              <a href="#">{{ map['text'] }}</a>
+            </li>
+          </ul>
+        </div>
       </section>
     </div><!-- // maps_wrap -->
 
@@ -111,6 +119,30 @@
   </main>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    let maps_area = new Vue({
+      el: '#maps',
+      data: {
+        areas: []
+      },
+      mounted(){
+        axios
+          .get('maps.json')
+          .then(response => (this.areas = response.data))
+      },
+      methods: {
+      }
+    })
+
+    let units_ares = new Vue({
+      el: '#units',
+      data: {
+        message: 'aaa'
+      }
+    })
+  </script>
   <script src="sketch.js"></script>
 </body>
 </html>
