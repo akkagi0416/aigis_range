@@ -46,6 +46,8 @@
       opacity: 1;
     }
     .popup{
+      height: 65%;
+      overflow-y: scroll;
       margin: 50px auto;
       background-color: #fff;
     }
@@ -55,19 +57,30 @@
     }
     #maps label{
     }
-    #maps input{
+    input{
       display: none;
     }
-    #maps .accordion_show{
+    .accordion_show{
       height: 0;
       overflow: hidden;
       opacity: 0;
       transition: 0.5s;
     }
-    #maps input:checked + .accordion_show{
+    input:checked + .accordion_show{
       height: auto;
       opacity: 1;
     }
+    .icons{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .icon{
+      width: calc(74px * 0.7);
+      height: calc(72px * 0.7);
+      background: url("img/splite.jpg");
+      background-size: calc(962px * 0.7) calc(2662px * 0.7);
+    }
+
   </style>
 </head>
 <body>
@@ -99,8 +112,8 @@
       <section id="maps" class="popup container p-4">
         <h3>マップ選択 <a href="#"><i class="far fa-times-circle"></i></a></h3>
         <div class="accordion" v-for="(maps, key, i) in areas">
-          <label v-bind:for="'label' + i">{{ key }}</label>
-          <input type="checkbox" v-bind:id="'label' + i">
+          <label v-bind:for="'label_map_' + i">{{ key }}</label>
+          <input type="checkbox" v-bind:id="'label_map_' + i">
           <ul class="accordion_show">
             <li class="map" v-for="map in maps" v-bind:data-img="map['img']">
               <a href="#">{{ map['text'] }}</a>
@@ -111,10 +124,22 @@
     </div><!-- // maps_wrap -->
 
     <div id="units_wrap" class="overlay">
-      <div id="units" class="popup container p-4">
+      <section id="units" class="popup container p-4">
         <h3>ユニット選択 <a href="#"><i class="far fa-times-circle"></i></a></h3>
-        <!-- here made by sketch.js -->
-      </div>
+        <div class="accordion" v-for="(rare, i) in rares">
+          <label v-bind:for="'label_unit_' + i">{{ rare }}</label>
+          <input type="checkbox" v-bind:id="'label_unit_' + i">
+          <div class="icons accordion_show">
+            <div class="icon"
+                 v-for="(icon, j) in icons"
+                 v-if="icon.rare == rare"
+                 v-bind:title="icon.long_name"
+                 v-bind:style="{ backgroundPosition: getPostion(j) }"
+                 v-bind:data-img="icon.img">
+            </div>
+          </div>
+        </div>
+      </section>
     </div><!-- // units_wrap -->
   </main>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
@@ -136,11 +161,37 @@
       }
     })
 
-    let units_ares = new Vue({
+    const magnification = 0.7
+    const iconWidth  = 74 * magnification
+    const iconHeight = 72 * magnification
+    const columSize  = 13
+
+    let units_area = new Vue({
       el: '#units',
       data: {
-        message: 'aaa'
-      }
+        icons: [],
+        rares: [
+          'ブラック',
+          'プラチナ',
+          'ゴールド',
+          'サファイア',
+          'シルバー',
+          'ブロンズ',
+          'アイアン'
+        ]
+      },
+      mounted() {
+        axios
+          .get('icons.json')
+          .then(response => (this.icons = response.data))
+      },
+      methods: {
+        getPostion: function(i){
+          let x = ((i % columSize) * iconWidth).toFixed(1)
+          let y = Math.floor(parseInt(i / columSize) * iconHeight)
+          return `-${x}px -${y}px`
+        }
+      },
     })
   </script>
   <script src="sketch.js"></script>
