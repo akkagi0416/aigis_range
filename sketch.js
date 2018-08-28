@@ -7,10 +7,11 @@ let px, py;         // position of pressed mouseX, mouseY
 let ranges = [];    // Range objects
 let icons = [];     // Icon objects
 
-let mode = "move";  // move, pen, eraser, save
+let mode = "hand";  // hand, pen, eraser, save
 
-const icon_width  = 74;
-const icon_height = 72;
+const iconW = 55.5;
+const iconH = 54;
+const iconMax = 20; // icon max count
 
 // let json_maps;
 
@@ -133,6 +134,7 @@ class Icon{
     this.img = loadImage(_img);
     this.px  = _px;
     this.py  = _py;
+    this.isSelected = false;
   }
 
   move(_px, _py){
@@ -141,7 +143,7 @@ class Icon{
   }
 
   show(){
-    image(this.img, this.px, this.py, icon_width, icon_height);
+    image(this.img, this.px, this.py, iconW, iconH);
   }
 }
 
@@ -158,15 +160,37 @@ function selectMode(){
 }
 
 function handPressed(){
+  // ranges
   for(let range of ranges){
     let d = dist(range.px1, range.py1, mouseX, mouseY);
     if(d <= cell.width / 2){
       range.isSelected = true;
+      // return;  // ok moving range same time
+    }
+  }
+
+  // icons
+  for(let icon of icons){
+    let d = dist(icon.px, icon.py, mouseX, mouseY);
+    if(d <= iconW / 2){
+      icon.isSelected = true;
+      return; // avoid icon moving same time
     }
   }
 }
 
 function handDragged(){
+  // move priority icon > range
+
+  // icons
+  for(let icon of icons){
+    if(icon.isSelected == true){
+      icon.move(mouseX, mouseY);
+      return; // move icon only, pass range
+    }
+  }
+
+  // ranges
   for(let range of ranges){
     if(range.isSelected == true){
       range.move(mouseX, mouseY);
@@ -177,6 +201,10 @@ function handDragged(){
 function handReleased(){
   for(let range of ranges){
     range.isSelected = false;
+  }
+
+  for(let icon of icons){
+    icon.isSelected = false;
   }
 }
 
@@ -205,10 +233,21 @@ function penReleased(){
 }
 
 function eraserPressed(){
+  // range
   for(let i = 0; i < ranges.length; i++){
     let d = dist(ranges[i].px1, ranges[i].py1, mouseX, mouseY);
     if(d <= cell.width / 2){
       ranges.splice(i, 1);  // erase
+      return;   // for avoid erasing double range & icon
+    }
+  }
+
+  // icon
+  for(let i = 0; i < icons.length; i++){
+    let d = dist(icons[i].px, icons[i].py, mouseX, mouseY);
+    if(d <= iconW / 2){
+      icons.splice(i, 1);  // erase
+      return;   // for avoid erasing double
     }
   }
 }
@@ -257,7 +296,11 @@ function selectMap(){
 }
 
 function selectIcon(){
+   if(icons.length >= iconMax){ return; }  // do nothing over iconMax
+
   let img = this.attribute('data-img');
-  let i = new Icon(img, icon_width * (icons.length + 1), 550);
+  let ix  = iconW * ((icons.length % 10) + 1);
+  let iy  = 550 + iconH * parseInt(icons.length / 10);
+  let i = new Icon(img, ix, iy);
   icons.push(i);
 }
