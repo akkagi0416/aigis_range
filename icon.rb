@@ -78,7 +78,7 @@ json = JSON.pretty_generate(
     {
       "long_name" => icon.long_name,
       "name"      => icon.name,
-      "img"       => icon.img.sub(/group_[abc]_files/, 'icon'),
+      "img"       => icon.img.sub(/group_[abc]_files/, 'icon') + '.png',
       "rare"      => icon.rare
     }
   end

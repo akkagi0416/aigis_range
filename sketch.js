@@ -5,17 +5,19 @@ let map;
 let cell;
 let px, py;         // position of pressed mouseX, mouseY
 let ranges = [];    // Range objects
+let icons = [];     // Icon objects
 
 let mode = "move";  // move, pen, eraser, save
 
-let icon;
+const icon_width  = 74;
+const icon_height = 72;
+
 // let json_maps;
 
 function preload(){
   map  = loadImage("img/map.jpg");
   cell = loadImage("img/cell.png");
   // json_maps = loadJSON("maps.json");
-  icon = loadImage("img/cell.png");   // for test
 }
 
 function setup(){
@@ -38,8 +40,8 @@ function setup(){
   }
 
   // select icon
-  let icons = selectAll(".icon");
-  for(let i of icons){
+  let dot_icons = selectAll(".icon");
+  for(let i of dot_icons){
     i.mousePressed(selectIcon);
   }
 }
@@ -53,7 +55,10 @@ function draw(){
   }
 
   // show icons
-  image(icon, 100, 550, 55.5, 54);
+  //image(icon, 100, 550, 55.5, 54);
+  for(let icon of icons){
+    icon.show();
+  }
 }
 
 function mousePressed(){
@@ -120,6 +125,23 @@ class Range{
 
   show(){
     drawRange(this.px1, this.py1, this.px2, this.py2);
+  }
+}
+
+class Icon{
+  constructor(_img, _px, _py){
+    this.img = loadImage(_img);
+    this.px  = _px;
+    this.py  = _py;
+  }
+
+  move(_px, _py){
+    this.px  = _px;
+    this.py  = _py;
+  }
+
+  show(){
+    image(this.img, this.px, this.py, icon_width, icon_height);
   }
 }
 
@@ -235,6 +257,7 @@ function selectMap(){
 }
 
 function selectIcon(){
-  console.log(this.attribute('data-img'));
-  icon = loadImage(this.attribute('data-img'));
+  let img = this.attribute('data-img');
+  let i = new Icon(img, icon_width * (icons.length + 1), 550);
+  icons.push(i);
 }
