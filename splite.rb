@@ -9,4 +9,4 @@ json.each do |icon|
   imgs << icon['img']
 end
 
-system "montage -tile 13x -geometry x72+0+0 -quality #{quality} #{imgs.join(' ')} splite2.jpg"
+system "montage -tile 13x -geometry x72+0+0 -quality #{quality} #{imgs.join(' ')} splite.jpg"

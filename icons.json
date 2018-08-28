@@ -216,6 +216,12 @@
     "rare": "ブラック"
   },
   {
+    "long_name": "シビラ",
+    "name": "シビラ",
+    "img": "./icon/cdf590e1a47d5ae3c6a7d3845c15357166f1fad0f1a699158a7b34be58cddac2.png",
+    "rare": "ブラック"
+  },
+  {
     "long_name": "星天の魔導鎧シルセス",
     "name": "シルセス",
     "img": "./icon/22eb15e7ab75278c638d949b80e8b0944dcca1f40120895f2f9918db1ebcf151.png",
@@ -1803,12 +1809,6 @@
     "long_name": "神鎖の救命師サルース",
     "name": "サルース",
     "img": "./icon/128b893e3b9cd27d44e2e1f355b9d24182b91a5837ca3f77e189f211787b12e2.png",
-    "rare": "サファイア"
-  },
-  {
-    "long_name": "シビラ",
-    "name": "シビラ",
-    "img": "./icon/cdf590e1a47d5ae3c6a7d3845c15357166f1fad0f1a699158a7b34be58cddac2.png",
     "rare": "サファイア"
   },
   {
