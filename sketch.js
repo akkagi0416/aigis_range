@@ -8,13 +8,14 @@ let ranges = [];    // Range objects
 
 let mode = "move";  // move, pen, eraser, save
 
-let json_maps;
-let aiu;
+let icon;
+// let json_maps;
 
 function preload(){
   map  = loadImage("img/map.jpg");
   cell = loadImage("img/cell.png");
   // json_maps = loadJSON("maps.json");
+  icon = loadImage("img/cell.png");   // for test
 }
 
 function setup(){
@@ -35,14 +36,24 @@ function setup(){
   for(let m of maps){
     m.mousePressed(selectMap);
   }
+
+  // select icon
+  let icons = selectAll(".icon");
+  for(let i of icons){
+    i.mousePressed(selectIcon);
+  }
 }
 
 function draw(){
   image(map, width / 2, height / 2);
 
+  // show ranges
   for(let range of ranges){
     range.show();
   }
+
+  // show icons
+  image(icon, 100, 550, 55.5, 54);
 }
 
 function mousePressed(){
@@ -113,9 +124,11 @@ class Range{
 }
 
 function selectMode(){
+  // avoid duplication of ".selected"
   for(let operation of selectAll(".operation")){
     operation.removeClass("selected");
   }
+  // add ".selected"
   if(!this.class().includes("selected")){
     this.addClass("selected");
     mode = this.id();
@@ -219,4 +232,9 @@ function selectMap(){
   let img = this.attribute('data-img');
   // TODO error check
   map = loadImage(img);
+}
+
+function selectIcon(){
+  console.log(this.attribute('data-img'));
+  icon = loadImage(this.attribute('data-img'));
 }
