@@ -13,14 +13,18 @@
       "img":  "https://i1.wp.com/akkagi.info/wp-content/uploads/2017/11/bandicam-2017-11-17-13-34-59-210.jpg"
     }
   ],
-  "map2":[
+  "ストーリー":[
     {
-      "text": "map2-1",
-      "img":  "map2_1.jpg"
+      "text": "王都脱出",
+      "img":  "https://i.gyazo.com/c2b928347aa8c1613b4c9e8780638382.png"
     },
     {
       "text": "map2-2",
-      "img":  "map2_2.jpg"
+      "img":  "https://image02.seesaawiki.jp/a/s/aigis/03d75bd109211d6b.png"
+    },
+    {
+      "text": "map2-3",
+      "img":  "https://i.gyazo.com/7b6fc38d6941800b739a4f1fe571e78d.png"
     }
   ]
 }

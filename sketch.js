@@ -48,7 +48,7 @@ function setup(){
 }
 
 function draw(){
-  image(map, width / 2, height / 2);
+  image(map, width / 2, height / 2, 960, 640);
 
   // show ranges
   for(let range of ranges){
