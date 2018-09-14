@@ -5,12 +5,12 @@ require 'minitest/autorun'
 require 'rack/test'
 require 'fileutils'
 
-class CrossDomain < Minitest::Test
+class AppTest < Minitest::Test
   include Rack::Test::Methods
 
-
   def app
-    Sinatra::Application
+    # Sinatra::Application
+    App # moduler style
   end
 
   def setup
