@@ -1,5 +1,5 @@
 require './crossdomain.rb'
 
-map '/aigis/range' do
+map '/aigis/crossdomain' do
   run App
 end
