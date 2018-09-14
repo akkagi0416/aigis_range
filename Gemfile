@@ -1,4 +1,5 @@
 gem 'sinatra'
+gem 'sinatra-contrib'
 gem 'minitest'
 gem 'rack-test'
 gem 'unicorn'

@@ -1,16 +1,39 @@
 require 'sinatra/base'
+require 'sinatra/reloader'
+require 'sinatra/custom_logger'
 require 'open-uri'
+require 'logger'
 
 class App < Sinatra::Base
+  helpers Sinatra::CustomLogger
+  
+  configure do
+    register Sinatra::Reloader
+    logger = Logger.new("log/crossdomain_#{settings.environment}.log")
+    set :logger, logger
+  end
+
+  configure :production do
+    enable :reloader
+  end
+
+
+  # for checking (at unicorn)
   get '/' do
     'hello'
   end
 
   get "/map" do
+    logger.info "#{request.ip},#{request.url}"
+
+    # simple check url
     url = params['url'] ? params['url'] : './map/map.jpg'
     if url.match(/png$/i)
       type = :png
-    elsif url.match(/jpg$/i)
+    elsif url.match(/(jpg|jpeg)$/i)
+      type = :jpg
+    else    # not png/jpg
+      url  = './map/map.jpg'
       type = :jpg
     end
 
@@ -26,6 +49,7 @@ class App < Sinatra::Base
       open(path, 'w'){|f| f.write img_data.read }
     end
 
+    # send data
     headers 'Access-Control-Allow-Origin' => '*'
     headers 'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-Type, Accept'
     headers 'cache' => is_cached.to_s

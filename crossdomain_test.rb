@@ -30,7 +30,7 @@ class AppTest < Minitest::Test
     assert_equal '*',           last_response.header['Access-Control-Allow-Origin']
     assert_equal '1226414',     last_response.header['Content-Length']
     assert_equal 'inline; filename="map.jpg"',   last_response.header['Content-Disposition']
-    assert_equal true,        last_response.header['cache']
+    assert_equal 'true',        last_response.header['cache']
   end
 
   def test_map_without_url_direct_url # direct url
@@ -55,7 +55,7 @@ class AppTest < Minitest::Test
     get '/map?url=https://i.gyazo.com/48fb96d871d246c2dd521e3926b124a6.png'
     assert_equal 'image/png', last_response.header['Content-Type']
     assert_equal '*',         last_response.header['Access-Control-Allow-Origin']
-    assert_equal false,     last_response.header['cache']
+    assert_equal 'false',     last_response.header['cache']
     assert_equal '951528',    last_response.header['Content-Length']
     assert File.exist?(@map)
 
@@ -63,7 +63,7 @@ class AppTest < Minitest::Test
     get '/map?url=https://i.gyazo.com/48fb96d871d246c2dd521e3926b124a6.png'
     assert_equal 'image/png', last_response.header['Content-Type']
     assert_equal '*',         last_response.header['Access-Control-Allow-Origin']
-    assert_equal true,      last_response.header['cache']
+    assert_equal 'true',      last_response.header['cache']
     assert_equal '951528',    last_response.header['Content-Length']
   end
 end
